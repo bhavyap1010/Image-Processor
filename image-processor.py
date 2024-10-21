@@ -5,7 +5,7 @@ import sys
 from filters import grayscale, reflect, apply_kernel
 
 def main():
-    if len(sys.argv) != 3 or sys.argv[1] not in ['-g', '-b', '-r', '-e']:
+    if len(sys.argv) != 3 or sys.argv[1] not in ['-g', '-b', '-r', '-e', '-c']:
         print("Usage: python image-processor.py <image-path> [-g, -b, r, -e]")
         return
 
@@ -33,6 +33,15 @@ def main():
                        [-1, 8, -1],
                        [-1, -1, -1]]
         image = apply_kernel(width, height, image, edge_kernel)
+
+    elif filter == '-c':
+        custom_kernel = []
+        print("Enter kernel values: ")
+        for _ in range(3):
+            custom_kernel.append(list(map(float, input().split())))
+
+        image = apply_kernel(width, height, image, custom_kernel)
+
 
     image = np.array(image)
 
