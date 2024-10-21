@@ -3,8 +3,8 @@ import numpy as np
 import sys
 
 def main():
-    if len(sys.argv) != 3 or sys.argv[1] not in ['-g', '-b', '-r', '-e']:
-        print("Usage: python image-processor.py <image-path> [-g, -b, r, -e]")
+    if len(sys.argv) != 3 or sys.argv[1] not in ['-g', '-b', '-r', '-e', '-c']:
+        print("Usage: python image-processor.py <image-path> [-g, -b, r, -e, -c]")
         return
 
     if sys.argv[2][-4:] in ['.png', '.jpg']:
@@ -29,6 +29,13 @@ def main():
                        [-1, 8, -1],
                        [-1, -1, -1]]
         image = cv2.filter2D(image, -1, np.array(edge_kernel))
+    elif filter == '-c':
+        custom_kernel = []
+        print("Enter kernel values: ")
+        for _ in range(3):
+            custom_kernel.append(list(map(float, input().split())))
+
+        image = cv2.filter2D(image, -1, np.array(custom_kernel))
 
     image = np.array(image)
 
